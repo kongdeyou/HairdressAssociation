@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的dao/mapper接口-->
+<mapper namespace="cn.cuitrwx.database.dao.SlideDao">
+    <resultMap type="cn.cuitrwx.database.model.SlidePO" id="SlidePO">
+        <id property="id" column="id" />
+        <result property="type" column="type" />
+        <result property="src" column="src" />
+        <result property="articleId" column="article_id" />
+        <result property="href" column="href" />
+    </resultMap>
+    <select id="getSlides" resultMap="SlidePO" >
+        select * from cuitrwx.slide  where is_deleted = false
+    </select>
+    <select id="getDeletedSlides" resultMap="SlidePO" >
+        select * from cuitrwx.slide  where is_deleted = true
+    </select>
+    <update id="putSlide"  parameterType="cn.cuitrwx.database.model.SlidePO"> 
+        update cuitrwx.slide 
+            <trim prefix="set" suffixOverrides=",">
+                <if test="type != null">type=#{type},</if>
+                <if test="src != null">src=#{src},</if>
+                <if test="articleId != null">article_id=#{articleId},</if>
+                <if test="href != null">href=#{href},</if>
+            </trim> 
+            where id=#{id} and is_deleted = false
+    </update>
+    <update id="deleteSlide" > 
+        update cuitrwx.slide 
+        set is_deleted = true
+        where id=#{id} and is_deleted = false
+    </update>
+    <update id="restoreSlide" > 
+        update cuitrwx.slide 
+        set is_deleted = false
+        where id=#{id} and is_deleted = true
+    </update>
+    <insert id="postSlide" parameterType="cn.cuitrwx.database.model.SlidePO"> 
+      insert into 
+        cuitrwx.slide (type, src, article_id,href) 
+      values(#{type},#{src},#{articleId},#{href})
+    </insert>
+
+</mapper>

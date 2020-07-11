@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <title>美容美发协会</title>
+    <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+
+    <script type="text/javascript" src="../res/layui/layui.js"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <style>
+
+    .layui-carousel {
+      float: right;
+      /*border: 1px solid black;*/
+      padding: 5px;
+      margin-top: 5px;
+      color: blue;
+
+
+    }
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="site-nav-bg">
+    <div class="site-nav w1200">
+
+        <div class="sn-quick-menu">
+            <div class="login"><a href="shopres">商家入驻</a></div>
+            <div class="login"><a href="shoplogin">商家登录</a></div>
+            <div class="login"><a href="userres">用户注册</a></div>
+            <div class="login"><a href="userlogin">用户登录</a></div>
+            <div class="login"><a href="appointment">我的预约</a></div>
+            <div class="login"><a href="admin">管理员</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="header">
+    <div class="headerLayout w1200">
+        <div class="headerCon">
+            <h1 class="mallLogo">
+                <a href="#" title="美容美发协会">
+                    <img src="../res/static/img/titlename.png">
+                </a>
+            </h1>
+        </div>
+    </div>
+</div>
+
+
+<div class="content content-nav-base commodity-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+                <div class="inner-cont2">
+                    <a href="#" class="active">管理潮流资讯</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="commod-cont w1200 layui-clear">
+            <div class="left-nav">
+
+            </div>
+            <div class="right-cont-wrap">
+                <div class="right-cont">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend>潮流资讯</legend>
+
+                        <table class="layui-table" lay-size="lg">
+                            <colgroup>
+                                <col width="150">
+                                <col width="200">
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>标题</th>
+                                <th>内容</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <div th:each="article:${article}">
+                                <tr>
+                                    <td><span th:text="${article.title}"></span></td>
+                                    <td><span th:text="${article.content}"></span></td>
+                                    <td> <a type="button" th:href="@{'http://localhost:8088/deletearticle?id='+${article.article_id}}" class="layui-btn layui-btn-normal"  style="background-color:plum;">删除</a></td>
+                                </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend>添加潮流资讯</legend>
+
+                    <form class="layui-form" action="http://localhost:8088/postarticle" method="post" >
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">标题</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="title" lay-verify="title" autocomplete="off"  class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">内容</label>
+                            <div class="layui-input-block">
+                                <textarea  name="content" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" style="background-color:plum;">立即提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <script src="res\layui\layui.js" charset="utf-8"></script>
+        <script>
+
+        layui.config({
+          base: '../res/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+        }).use(['mm', 'laypage', 'jquery'], function () {
+          var laypage = layui.laypage, $ = layui.$;
+          mm = layui.mm;
+          laypage.render({
+            elem: 'demo0'
+            , count: 100 //数据总数
+          });
+
+
+          $('body').on('click', '*[data-content]', function () {
+            $(this).addClass('active').siblings().removeClass('active')
+            var dataConte = $(this).attr('data-content');
+            $('*[cont]').each(function (i, item) {
+              var itemCont = $(item).attr('cont');
+              console.log(item)
+              if (dataConte === itemCont) {
+                $(item).removeClass('layui-hide');
+              } else {
+                $(item).addClass('layui-hide');
+              }
+            })
+          })
+
+        });
+        layui.use('upload', function(){
+  var $ = layui.jquery
+  ,upload = layui.upload;
+
+
+
+
+
+
+
+        </script>
+        </script>
+
+</body>
+
+</html>

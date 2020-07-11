@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>美容美发协会</title>
+    <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+    <script type="text/javascript" src="../res/layui/layui.js"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <style>
+    .layui-input-block {
+      width: 800px;
+    }
+
+    }
+
+
+    </style>
+</head>
+<body>
+
+<div class="site-nav-bg">
+    <div class="site-nav w1200">
+
+        <div class="sn-quick-menu">
+            <div class="login"><a href="shopres">商家入驻</a></div>
+            <div class="login"><a href="shoplogin">商家登录</a></div>
+            <div class="login"><a href="userres">用户注册</a></div>
+            <div class="login"><a href="userlogin">用户登录</a></div>
+            <div class="login"><a href="appointment">我的预约</a></div>
+            <div class="login"><a href="admin">管理员</a></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="header">
+    <div class="headerLayout w1200">
+        <div class="headerCon">
+            <h1 class="mallLogo">
+                <a href="#" title="美容美发协会">
+                    <img src="../res/static/img/titlename.png">
+                </a>
+            </h1>
+            <div class="mallSearch">
+                <form action="" class="layui-form" novalidate>
+                    <input type="text" name="title" required lay-verify="required" autocomplete="off"
+                           class="layui-input" placeholder="请输入店铺名查找">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">
+                        <i class="layui-icon layui-icon-search"></i>
+                    </button>
+                    <input type="hidden" name="" value="">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content content-nav-base commodity-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+                <div class="inner-cont2">
+                    <a href="index">潮流资讯</a>
+                    <a href="shoplist" class="active">店铺浏览</a>
+                    <a href="about">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="commod-cont-wrap">
+        <div class="commod-cont w1200 layui-clear">
+            <div class="left-nav">
+                <div class="title">分类</div>
+                <div class="list-box">
+                    <dl>
+                        <dt><a onclick="test2()">美发套餐</a></dt>
+                    </dl>
+                    <dl>
+                        <dt><a onclick="test1()">发型师</a></dt>
+                    </dl>
+                    <dl>
+                        <dt style="color:plum;">店铺评论</dt>
+                    </dl>
+                    <dt><a onclick="test3()">进行预约</a></dt>
+                    </dl>
+                    </dl>
+                    <dt><a onclick="test4()">店铺信息</a></dt>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="right-cont-wrap">
+
+                <div style="padding: 20px; background-color: #F2F2F2;">
+                    <div th:each="comment:${comment}">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header"><span
+                                            th:text="'用户'+${comment.user_id}+' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp '+${comment.time}"></span>
+                                    </div>
+                                    <div class="layui-card-body">
+                                        <span th:text="${comment.content}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right-cont">
+
+                            <div class="layui-form-item layui-form-text">
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入评价内容" id = "content" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <a type="button" class="layui-btn" onclick="addcomment()" lay-submit=""
+                                   lay-filter="demo2">提交</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+            function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+          var a = getQueryVariable("id")
+
+         function test1(){
+			 window.location.href='http://localhost:8088/shop_hairstylist?id='+a
+		}
+
+		function test2(){
+			 window.location.href='http://localhost:8088/shop_type?id='+a
+		}
+
+		function test3(){
+			 window.location.href='http://localhost:8088/shop_appoint?id='+a
+		}
+		function test4(){
+			 window.location.href='http://localhost:8088/shop_info?id='+a
+		}
+		function addcomment(){
+		  var content = document.getElementById("content").value
+		  var form = new FormData();
+		  var user_id = getCookie("id");
+          var date = new Date();
+          //添加参数bai
+          form.append('shop_id', a);
+          form.append('content', content);
+          form.append('time', date);
+          form.append('user_id', user_id);
+          //使用xmlhttprequest发起请求du
+          var xhr = new XMLHttpRequest();
+          xhr.open('post', 'http://localhost:8088/shop_postcomment', true);
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+              //成功
+            }
+          }
+          var gnl = confirm("确定要提交?");
+           if (gnl == true) {
+          //执行请求
+          xhr.send(form);
+           window.location.reload();//强制刷新
+
+          }
+		}
+		//获取当前用户id
+		 function getCookie(cookie_name) {
+
+            var allcookies = document.cookie;
+
+            var cookie_pos = allcookies.indexOf(cookie_name);   
+
+
+            if (cookie_pos != -1) {
+
+              cookie_pos += cookie_name.length + 1;     
+
+              var cookie_end = allcookies.indexOf(";", cookie_pos);
+
+              if (cookie_end == -1) {
+
+                cookie_end = allcookies.length;
+
+              }
+              var value = unescape(allcookies.substring(cookie_pos, cookie_end)); 
+
+            }
+            return value;
+          }
+
+  layui.config({
+    base: '../res/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','laypage','jquery'],function(){
+      var laypage = layui.laypage,$ = layui.$,
+     mm = layui.mm;
+       laypage.render({
+        elem: 'demo0'
+        ,count: 100 //数据总数
+      });
+
+    $('.sort a').on('click',function(){
+      $(this).addClass('active').siblings().removeClass('active');
+    })
+    $('.list-box dt').on('click',function(){
+      if($(this).attr('off')){
+        $(this).removeClass('active').siblings('dd').show()
+        $(this).attr('off','')
+      }else{
+        $(this).addClass('active').siblings('dd').hide()
+        $(this).attr('off',true)
+      }
+    })
+
+});
+
+
+
+
+
+
+
+            </script>
+            <script src="static/res/layui/layui.js" charset="utf-8"></script>
+            <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+            <script>
+layui.use(['element', 'layer'], function(){
+  var element = layui.element;
+  var layer = layui.layer;
+
+  //监听折叠
+  element.on('collapse(test)', function(data){
+    layer.msg('展开状态：'+ data.show);
+  });
+});
+
+
+            </script>
+
+
+</body>
+</html>

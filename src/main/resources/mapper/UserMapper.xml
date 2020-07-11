@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的dao/mapper接口-->
+<mapper namespace="cn.cuit.HairdressAssociation.dao.UserDao">
+
+
+    <select id="login"  resultType="cn.cuit.HairdressAssociation.model.User">
+        select * from user
+        where username = #{username} and password = #{password} and is_delete = false
+    </select>
+    <select id="finduser"  resultType="cn.cuit.HairdressAssociation.model.User">
+        select * from user
+        where id = #{id} and is_delete = false
+    </select>
+    <insert id="res" parameterType="cn.cuit.HairdressAssociation.model.User">
+        insert into cuitgp.user(username,password,tel,name)
+        values(#{username},#{password},#{tel},#{name})
+    </insert>
+</mapper>

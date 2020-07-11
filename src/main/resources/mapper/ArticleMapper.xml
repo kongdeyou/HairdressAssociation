@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的dao/mapper接口-->
+
+
+<mapper namespace="cn.cuit.HairdressAssociation.dao.ArticleDao">
+    <resultMap type="cn.cuit.HairdressAssociation.model.Article" id="ArticleMap">
+        <id property="article_id" column="articleid" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+    </resultMap>
+
+    <select id="getArticle"  resultMap="ArticleMap">
+        select * from cuitgp.article where articleid = #{articleid_id} and is_delete = false
+    </select>
+
+    <select id="getArticles" resultMap="ArticleMap">
+        select * from cuitgp.article where is_delete = false order by articleid  desc
+    </select>
+
+    <insert id="postArticle" parameterType="cn.cuit.HairdressAssociation.model.Article">
+        insert into cuitgp.article(title,content)
+        values(#{title},#{content})
+    </insert>
+
+    <update id="deleteArticle">
+        update cuitgp.article set is_delete = true where articleid = #{article_id}
+    </update>
+
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的dao/mapper接口-->
+<mapper namespace="cn.cuit.HairdressAssociation.dao.ShopDao">
+    <resultMap type="cn.cuit.HairdressAssociation.model.Shop" id="ShopMap">
+        <id property="id" column="shop_id" />
+        <result property="shop_name" column="shop_name" />
+        <result property="password" column="password" />
+        <result property="address" column="address" />
+        <result property="image" column="image" />
+        <result property="tel" column="tel" />
+        <result property="describe" column="describe" />
+        <result property="shop_username" column="shop_username" />
+    </resultMap>
+
+    <select id="getShop" resultMap="ShopMap">
+        select * from cuitgp.shop where id = #{id} and is_delete = false
+    </select>
+    <select id="shoplogin" resultType="cn.cuit.HairdressAssociation.model.Shop">
+        select * from cuitgp.shop where shop_username = #{shop_username} and password = #{password} and is_delete = false
+    </select>
+
+    <select id="getShops" resultType="cn.cuit.HairdressAssociation.model.Shop">
+        select * from cuitgp.shop where is_delete = false order by id  desc
+    </select>
+
+    <insert id="postShop" parameterType="cn.cuit.HairdressAssociation.model.Shop">
+        insert into cuitgp.shop(shop_name,password,shop_username)
+        values(#{shop_name},#{password},#{shop_username})
+    </insert>
+
+    <update id="deleteShop">
+        update cuitgp.shop set is_delete = true where id = #{id}
+    </update>
+    <update id="putShop" parameterType="cn.cuit.HairdressAssociation.model.Shop">
+        update cuitgp.shop
+        <trim prefix="set" suffixOverrides=",">
+            <if test="shop_name != null">shop_name=#{shop_name},</if>
+            <if test="password != null">password=#{password},</if>
+            <if test="address != null">address=#{address},</if>
+            <if test="image != null">image=#{image},</if>
+            <if test="tel != null">tel=#{tel},</if>
+            <if test="details != null">details=#{details},</if>
+            <if test="shop_username != null">shop_username=#{shop_username},</if>
+        </trim>
+        where id = #{id} and is_delete = false
+    </update>
+</mapper>
+

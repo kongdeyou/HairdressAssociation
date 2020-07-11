@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+          crossorigin="anonymous"></script>
+  <title>美容美发协会</title>
+  <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+  <script type="text/javascript" src="../res/layui/layui.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+
+  <div class="site-nav-bg">
+    <div class="site-nav w1200">
+      
+      <div class="sn-quick-menu">
+        <div class="login"><a href="shopres">商家入驻</a></div>
+        <div class="login"><a href="shoplogin">商家登录</a></div>
+        <div class="login"><a href="userres">用户注册</a></div>
+        <div class="login"><a href="userlogin">用户登录</a></div>
+        <div class="login"><a href="appointment">我的预约</a></div>
+        <div class="login"><a href="admin">管理员</a></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+        <h1 class="mallLogo">
+          <a href="#" title="美容美发协会">
+            <img src="../res/static/img/titlename.png">
+          </a>
+        </h1>
+        <div class="mallSearch">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content content-nav-base information-content">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="index">潮流资讯</a>
+            <a href="shoplist"  class="active">店铺浏览</a>
+            <a href="about">关于我们</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info-list-box">
+      <div class="info-list w1200">
+        <div class="item-box layui-clear" id="list-cont">
+          <div th:each="shop:${shoplist}">
+            <div class="item">
+              <div class="img">
+                <img th:src="'http://127.0.0.1:8089/'+${shop.image}" width="300px" height="300px" alt="">
+              </div>
+              <div class="text">
+                <h4> <span th:text="${shop.shop_name}"></span></h4>
+                <p class="info-cont"> <span th:text="${shop.details}"></span></p>
+              </div>
+              <a type="button" th:href="@{'http://localhost:8088/shop_type?id='+${shop.id}}" class="layui-btn layui-btn-normal"  style="background-color:plum;">进店看看</a>
+            </div>
+
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+  layui.config({
+    base: '../res/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','laypage'],function(){
+      var
+      mm = layui.mm,laypage = layui.laypage;
+      laypage.render({
+        elem: 'demo0'
+        ,count: 100 //数据总数
+      });
+
+});
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--核心配置文件-->
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/cuitgp?useSSL = true&amp;useUnicude=true&amp;characterEncoding=utf-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--每一个mapper.xml都需要在mybatis核心配置文件中注册-->
+    <mappers>
+        <mapper resource="Mapper/AppointmentMapper.xml"/>
+        <mapper resource="Mapper/ArticleMapper.xml"/>
+        <mapper resource="Mapper/HairstylistMapper.xml"/>
+        <mapper resource="Mapper/ShopMapper.xml"/>
+<!--        <mapper resource="Mapper/SlideMapper.xml"/>-->
+        <mapper resource="Mapper/TypeMapper.xml"/>
+        <mapper resource="Mapper/UserMapper.xml"/>
+        <mapper resource="Mapper/CommentMapper.xml"/>
+
+    </mappers>
+</configuration>

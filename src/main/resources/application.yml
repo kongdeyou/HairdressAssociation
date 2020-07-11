@@ -1,0 +1,17 @@
+server:
+  port: 8088
+  session-timeout: 30
+  tomcat.max-threads: 0
+  tomcat.uri-encoding: UTF-8
+
+spring:
+  datasource:
+    url : jdbc:mysql://localhost:3306/cuitgp?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username : root
+    password : 123456
+    driverClassName : com.mysql.jdbc.Driver
+  resources :
+    static-locations : classpath:/static/
+  mybatis:
+    mapper-locations: classpath:/*.xml
+    type-aliases-package: cn.cuitrwx.articleService.model

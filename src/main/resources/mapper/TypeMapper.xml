@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的dao/mapper接口-->
+<mapper namespace="cn.cuit.HairdressAssociation.dao.TypeDao">
+
+    <select id="getAllType" resultType="cn.cuit.HairdressAssociation.model.Type">
+        select * from cuitgp.type where is_delete = false and shop_id = #{id} order by type_id  desc
+    </select>
+    <select id="getType" resultType="cn.cuit.HairdressAssociation.model.Type">
+        select * from cuitgp.type where is_delete = false and type_id = #{id}
+    </select>
+    <insert id="addType" parameterType="cn.cuit.HairdressAssociation.model.Type">
+        insert into cuitgp.type(shop_id,type_name,content,price,image)
+        values(#{shop_id},#{type_name},#{content},#{price},#{image})
+    </insert>
+
+    <update id="deleteType">
+        update cuitgp.type set is_delete = 1 where type_id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <title>美容美发协会</title>
+    <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+
+    <script type="text/javascript" src="../res/layui/layui.js"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <style>
+
+    .layui-carousel {
+      float: right;
+      /*border: 1px solid black;*/
+      padding: 5px;
+      margin-top: 5px;
+      color: blue;
+
+
+    }
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="site-nav-bg">
+    <div class="site-nav w1200">
+
+        <div class="sn-quick-menu">
+            <div class="login"><a href="shopres">商家入驻</a></div>
+            <div class="login"><a href="shoplogin">商家登录</a></div>
+            <div class="login"><a href="userres">用户注册</a></div>
+            <div class="login"><a href="userlogin">用户登录</a></div>
+            <div class="login"><a href="appointment">我的预约</a></div>
+            <div class="login"><a href="admin">管理员</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="header">
+    <div class="headerLayout w1200">
+        <div class="headerCon">
+            <h1 class="mallLogo">
+                <a href="#" title="美容美发协会">
+                    <img src="../res/static/img/titlename.png">
+                </a>
+            </h1>
+        </div>
+    </div>
+</div>
+
+
+<div class="content content-nav-base commodity-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+                <div class="inner-cont2">
+                    <a href="#" class="active">商家管理</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="commod-cont-wrap">
+        <div class="commod-cont w1200 layui-clear">
+            <div class="left-nav">
+                <div class="title">分类</div>
+                <div class="list-box">
+                    <dl>
+                        <dt><a style="color:plum;">首页</a></dt>
+                    </dl>
+                    <dl>
+                        <dt><a href="shop_edit">店铺管理</a></dt>
+                    </dl>
+                    <dl>
+                        <dt><a href="shop_appoint_edit">预约管理</a></dt>
+                    </dl>
+                    <dt><a href="shop_eval">店铺评论</a></dt>
+                    </dl>
+                </div>
+            </div>
+            <div class="right-cont-wrap">
+                <div class="right-cont">
+                    <form class="layui-form" action="http://localhost:8088/putshop" method="post" enctype="multipart/form-data">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">商家图片</label>
+                            <div class="layui-input-block">
+                            <input class="input-file" id="fileInput" name="image" type="file" />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">店铺名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="shop_name" th:value="${shop.shop_name}"lay-verify="title" autocomplete="off"  class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">详细地址</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="address"  th:value="${shop.address}" lay-verify="required" lay-reqtext="" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">联系方式</label>
+                                <div class="layui-input-inline">
+                                    <input type="tel" name="tel"  th:value="${shop.tel}" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">店铺详情</label>
+                            <div class="layui-input-block">
+                                <textarea  name="details" th:text="${shop.details}"class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" style="background-color:plum;">立即提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="res\layui\layui.js" charset="utf-8"></script>
+        <script>
+
+        layui.config({
+          base: '../res/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+        }).use(['mm', 'laypage', 'jquery'], function () {
+          var laypage = layui.laypage, $ = layui.$;
+          mm = layui.mm;
+          laypage.render({
+            elem: 'demo0'
+            , count: 100 //数据总数
+          });
+
+
+          $('body').on('click', '*[data-content]', function () {
+            $(this).addClass('active').siblings().removeClass('active')
+            var dataConte = $(this).attr('data-content');
+            $('*[cont]').each(function (i, item) {
+              var itemCont = $(item).attr('cont');
+              console.log(item)
+              if (dataConte === itemCont) {
+                $(item).removeClass('layui-hide');
+              } else {
+                $(item).addClass('layui-hide');
+              }
+            })
+          })
+
+        });
+        layui.use('upload', function(){
+  var $ = layui.jquery
+  ,upload = layui.upload;
+
+  //普通图片上传
+  var uploadInst = upload.render({
+    elem: '#test1'
+    ,url: 'https://httpbin.org/post' //改成您自己的上传接口
+    ,before: function(obj){
+      //预读本地文件示例，不支持ie8
+      obj.preview(function(index, file, result){
+        $('#demo1').attr('src', result); //图片链接（base64）
+      });
+    }
+    ,done: function(res){
+      //如果上传失败
+      if(res.code > 0){
+        return layer.msg('上传失败');
+      }
+      //上传成功
+    }
+    ,error: function(){
+      //演示失败状态，并实现重传
+      var demoText = $('#demoText');
+      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+      demoText.find('.demo-reload').on('click', function(){
+        uploadInst.upload();
+      });
+    }
+  });
+
+
+
+
+
+        </script>
+        </script>
+
+</body>
+
+</html>

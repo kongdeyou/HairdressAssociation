@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的dao/mapper接口-->
+<mapper namespace="cn.cuit.HairdressAssociation.dao.AppointmentDao">
+
+    <select id="getAppointById" resultType="cn.cuit.HairdressAssociation.model.Appointment">
+        select * from cuitgp.appointment
+        where user_id = #{id} and is_delete = false
+    </select>
+    <select id="getAllAppoint" resultType="cn.cuit.HairdressAssociation.model.Appointment">
+        select * from cuitgp.appointment where is_delete = false and shop_id = #{id}
+    </select>
+    <insert id="addAppoint" parameterType="cn.cuit.HairdressAssociation.model.Appointment">
+        insert into cuitgp.appointment(user_id,shop_id,hairstylist_id,type_id,appoint_time)
+        values(#{user_id},#{shop_id},#{hairstylist_id},#{type_id},#{appoint_time})
+    </insert>
+    <update id="passAppoint">
+        update cuitgp.appointment set status = 1 where appoint_id = #{appoint_id}
+    </update>
+    <update id="endAppoint">
+        update cuitgp.appointment set status = 2 where appoint_id = #{appoint_id}
+    </update>
+    <update id="deleteAppoint">
+        update cuitgp.appointment set is_delete = true where appoint_id = #{appoint_id}
+    </update>
+
+</mapper>
+

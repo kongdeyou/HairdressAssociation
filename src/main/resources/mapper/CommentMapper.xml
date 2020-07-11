@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的dao/mapper接口-->
+<mapper namespace="cn.cuit.HairdressAssociation.dao.CommentDao">
+
+    <select id="getComment" resultType="cn.cuit.HairdressAssociation.model.Comment">
+        select * from cuitgp.comment where is_delete = false and shop_id = #{id}
+    </select>
+    <insert id="addComment" parameterType="cn.cuit.HairdressAssociation.model.Comment">
+        insert into cuitgp.comment(shop_id,user_id,content,time)
+        values(#{shop_id},#{user_id},#{content},#{time})
+    </insert>
+</mapper>

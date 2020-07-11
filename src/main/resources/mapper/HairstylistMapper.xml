@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的dao/mapper接口-->
+
+
+<mapper namespace="cn.cuit.HairdressAssociation.dao.HairstylistDao">
+    <select id="getAllHairstylist" resultType="cn.cuit.HairdressAssociation.model.Hairstylist">
+        select * from cuitgp.hairstylist where is_delete = false and shop_id = #{id} order by hairstylist_id  desc
+    </select>
+    <select id="getHairstylist" resultType="cn.cuit.HairdressAssociation.model.Hairstylist">
+        select * from cuitgp.hairstylist where is_delete = false and hairstylist_id = #{id}
+    </select>
+    <insert id="addHairstylist" parameterType="cn.cuit.HairdressAssociation.model.Hairstylist">
+        insert into cuitgp.hairstylist(shop_id,name,case_content,image)
+        values(#{shop_id},#{name},#{case_content},#{image})
+    </insert>
+
+    <update id="deleteHairstylist">
+        update cuitgp.hairstylist set is_delete = 1 where hairstylist_id = #{id}
+    </update>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
